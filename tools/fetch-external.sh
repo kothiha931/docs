@@ -90,3 +90,11 @@ cd pages/learn/more/masterclasses/ && {
   mv README.md docker-masterclass.md
   cd -
 }
+
+# pull in balenaLabs GitHub projects
+cd shared/projects/ && {
+  echo "Name|Description
+---|---" > balena-labs-projects.md
+  curl https://api.github.com/orgs/balenalabs/repos | jq -r 'sort_by(-.stargazers_count) |  (.[] | [.name,.html_url,.description] | "[\(.[0])](\(.[1]))|\(.[2] // "")") ' >> balena-labs-projects.md
+  cd -
+}
